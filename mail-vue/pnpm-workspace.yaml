@@ -1,0 +1,4 @@
+allowBuilds:
+  "@parcel/watcher@2.5.1": true
+  "esbuild@0.25.9": true
+  "vue-demi@0.14.10": true
