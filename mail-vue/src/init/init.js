@@ -16,8 +16,15 @@ export async function init() {
 
     const token = localStorage.getItem('token');
     if (!settingStore.lang) {
-        let lang = navigator.language.split('-')[0]
-        lang = lang === 'zh' ? lang : 'en'
+        const navLang = (navigator.language || navigator.userLanguage || '').toLowerCase()
+        let lang = 'en'
+        if (navLang.startsWith('zh-hk') || navLang === 'zh-hk') {
+            lang = 'zh-HK'
+        } else if (navLang.startsWith('zh-tw') || navLang.startsWith('zh-hant')) {
+            lang = 'zh-HK' // Traditional Chinese fallback to HK variant
+        } else if (navLang.startsWith('zh')) {
+            lang = 'zh'
+        }
         settingStore.lang = lang
     }
 
