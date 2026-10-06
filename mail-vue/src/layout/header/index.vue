@@ -16,6 +16,18 @@
       <div v-else class="dark-icon icon-item" @click="openDark($event)">
         <Icon icon="solar:moon-linear"/>
       </div>
+      <el-dropdown trigger="click" @command="changeLang">
+        <div class="icon-item" style="cursor:pointer;display:flex;align-items:center;">
+          <Icon icon="material-symbols:language" width="20" height="20"/>
+        </div>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="zh" :disabled="settingStore.lang === 'zh'">简体中文</el-dropdown-item>
+            <el-dropdown-item command="zh-HK" :disabled="settingStore.lang === 'zh-HK'">繁體中文（香港）</el-dropdown-item>
+            <el-dropdown-item command="en" :disabled="settingStore.lang === 'en'">English</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
       <div class="notice icon-item" @click="openNotice">
         <Icon icon="streamline-plump:announcement-megaphone"/>
       </div>
@@ -183,7 +195,9 @@ async function copyEmail(email) {
 }
 
 function changeLang(lang) {
-  setExtend(lang === 'en' ? 'en' : 'zh-cn')
+  // lang: 'en' | 'zh' | 'zh-HK'
+  const dayLocale = lang === 'en' ? 'en' : (lang === 'zh-HK' ? 'zh-tw' : 'zh-cn')
+  setExtend(dayLocale)
   settingStore.lang = lang
 }
 
